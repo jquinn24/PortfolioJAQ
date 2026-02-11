@@ -165,8 +165,4 @@ This project is open source and available under the MIT License.
 
 ## Support
 
-For questions or improvements, feel free to modify the code and customize it to your needs!
 
----
-
-**Happy coding! 🚀**

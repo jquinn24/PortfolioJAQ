@@ -1,6 +1,7 @@
 // Contact form submission handler
 document.addEventListener('DOMContentLoaded', function() {
     const contactForm = document.getElementById('contact-form');
+    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
     
     if (contactForm) {
         contactForm.addEventListener('submit', handleFormSubmit);
@@ -19,6 +20,37 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const activeId = entry.target.getAttribute('id');
+                setActiveLink(activeId);
+            }
+        });
+    }, {
+        rootMargin: '-40% 0px -45% 0px',
+        threshold: 0.1
+    });
+
+    document.querySelectorAll('section[id]').forEach(section => {
+        sectionObserver.observe(section);
+    });
+
+    const initialTarget = window.location.hash.replace('#', '') || 'home';
+    setActiveLink(initialTarget);
+
+    window.addEventListener('hashchange', () => {
+        const hashTarget = window.location.hash.replace('#', '') || 'home';
+        setActiveLink(hashTarget);
+    });
+
+    function setActiveLink(targetId) {
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            link.classList.toggle('active', href === `#${targetId}`);
+        });
+    }
 });
 
 async function handleFormSubmit(e) {

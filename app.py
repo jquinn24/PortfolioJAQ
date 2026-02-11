@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 import os
 
 app = Flask(__name__, template_folder='app/templates', static_folder='app/static')
@@ -11,17 +11,17 @@ def index():
 @app.route('/about')
 def about():
     """Render the about page"""
-    return render_template('about.html')
+    return redirect(url_for('index') + '#about')
 
 @app.route('/projects')
 def projects():
     """Render the projects page"""
-    return render_template('projects.html')
+    return redirect(url_for('index') + '#projects')
 
 @app.route('/contact')
 def contact():
     """Render the contact page"""
-    return render_template('contact.html')
+    return redirect(url_for('index') + '#contact')
 
 @app.route('/api/send-message', methods=['POST'])
 def send_message():
