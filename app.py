@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify, redirect, url_for
 import os
 
 app = Flask(__name__, template_folder='app/templates', static_folder='app/static')
+app.config['ENV'] = os.environ.get('FLASK_ENV', 'production')
 
 @app.route('/')
 def index():
@@ -46,4 +47,6 @@ def send_message():
         }), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, host='localhost', port=5000)
+    port = int(os.environ.get('PORT', 5000))
+    debug = os.environ.get('FLASK_ENV') == 'development'
+    app.run(debug=debug, host='0.0.0.0', port=port)
